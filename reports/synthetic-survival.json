@@ -1,0 +1,54 @@
+{
+  "data_kind": "synthetic software validation",
+  "seed": 20261009,
+  "participants": 600,
+  "training_participants": 450,
+  "test_participants": 150,
+  "training_events": 146,
+  "test_events": 48,
+  "test_right_censored": 102,
+  "metric": "Mean held-out observation log likelihood (higher is better; not accuracy or calibrated clinical risk)",
+  "results": {
+    "clinical": {
+      "mean_test_log_likelihood": -1.112086453731166
+    },
+    "clinical_mri": {
+      "mean_test_log_likelihood": -1.0533073462196527
+    }
+  },
+  "paired_mri_gain": {
+    "mean": 0.058779107511513426,
+    "bootstrap_95_interval": [
+      -0.0037566680409852784,
+      0.11646232542215315
+    ],
+    "resamples": 5000
+  },
+  "assumptions": [
+    "Weibull event-time distribution",
+    "Independent censoring and noninformative assessment schedule",
+    "First threshold crossing modeled within last-zero/first-positive interval; CDR may fluctuate"
+  ],
+  "limitations": [
+    "Synthetic MRI effect is imposed by the generator, not a discovery.",
+    "No ADNI training, external validation, personal prognosis, or clinical accuracy claim."
+  ],
+  "preprocessing": "Training-only median imputation and standardization; held-out participants never used to fit.",
+  "split": "Stratified 75/25 split by participant; fixed seed; no model selection on test results.",
+  "software_versions": {
+    "lifelines": "0.30.3",
+    "pandas": "2.3.3",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.0"
+  },
+  "input_sha256": null,
+  "implementation_sha256": "a590780fda72f496ba811c6a0392937f5ba5c563e0972b6ddc703325ee8f142f",
+  "generator": {
+    "participants": 600,
+    "seed": 20261009,
+    "assessment_interval_days": 180,
+    "censoring": "independent uniform 365\u20131825 days, last scheduled visit",
+    "true_shape": 1.6
+  }
+}

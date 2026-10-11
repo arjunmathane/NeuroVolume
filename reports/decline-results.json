@@ -1,0 +1,348 @@
+{
+  "endpoint": "First recorded CDR > 0 within 1095 MRI-delay days after baseline CDR = 0",
+  "status": "Exploratory internal-validation pilot; no independent test cohort or external validation",
+  "horizon_days": 1095,
+  "cohort": {
+    "eligible_baseline": 85,
+    "excluded_insufficient_followup": 42,
+    "included": 43,
+    "events": 8,
+    "non_events": 35
+  },
+  "source_sha256": "2298ed89718ffeb4131ee41ab22bada949542e028bda0c9356c6688c944f930e",
+  "validation": "3-fold stratified CV repeated 10 times; same splits for both models; fold-local preprocessing; fixed C=0.1",
+  "results": {
+    "age": {
+      "mean_repeated_oof_auc": 0.7458928571428572,
+      "repeat_auc_range": [
+        0.6946428571428571,
+        0.8125
+      ],
+      "mean_repeated_oof_brier": 0.1461620654799646,
+      "mean_repeated_oof_balanced_accuracy": 0.5,
+      "per_repeat_metrics": [
+        {
+          "auc": 0.7696428571428572,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.14447914677863638,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.7714285714285715,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.14509619332326257,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.7303571428571428,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.14544139634691144,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.7892857142857143,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.15025973595865363,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.7125,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.14543877745727452,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.8125,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.14699568080300887,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.7267857142857143,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.1466987628634514,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.7375,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.1456994290834265,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.7142857142857143,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.14517784662644692,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.6946428571428571,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.146333685558574,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        }
+      ]
+    },
+    "age_mri": {
+      "mean_repeated_oof_auc": 0.7389285714285714,
+      "repeat_auc_range": [
+        0.6928571428571428,
+        0.7892857142857143
+      ],
+      "mean_repeated_oof_brier": 0.14456628148325498,
+      "mean_repeated_oof_balanced_accuracy": 0.5,
+      "per_repeat_metrics": [
+        {
+          "auc": 0.7714285714285715,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.14156091157968678,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.7428571428571429,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.14196678650514774,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.7321428571428572,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.14321213971294794,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.7892857142857143,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.14802195198060897,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.6928571428571428,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.14958233752819605,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.75,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.14539677540137436,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.7035714285714285,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.14536776129023624,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.7107142857142857,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.14390189450148483,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.7642857142857142,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.1429976927044546,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        },
+        {
+          "auc": 0.7321428571428572,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.813953488372093,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "precision": 0.0,
+          "brier": 0.14365456362841258,
+          "confusion": {
+            "tn": 35,
+            "fp": 0,
+            "fn": 8,
+            "tp": 0
+          }
+        }
+      ]
+    }
+  },
+  "model_use": "Full-cohort refits for illustrative inference only. CV metrics do not evaluate these final refits independently.",
+  "limitations": [
+    "Eight events: unstable estimates; no clinical risk interpretation.",
+    "Horizon chosen after follow-up feasibility counts, before fitting prognostic models.",
+    "Repeat ranges describe split variability, not confidence intervals.",
+    "Excluded short follow-up may introduce selection bias.",
+    "CDR is aligned to MRI visits; scan intervals are only proxies for assessment intervals.",
+    "First recorded impairment is not biological onset or confirmed Alzheimer disease.",
+    "The parent study already explored this cohort; this is exploratory, not a new untouched test."
+  ]
+}

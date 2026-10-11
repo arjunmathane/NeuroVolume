@@ -1,0 +1,40 @@
+{
+  "data_kind": "synthetic software fixture",
+  "input_participants": 6,
+  "included": 4,
+  "excluded": {
+    "mri_after_baseline": 1,
+    "mri_too_old": 0,
+    "failed_mri_qc": 1,
+    "no_baseline_assessment": 0,
+    "baseline_impaired": 0,
+    "no_followup": 0
+  },
+  "events": 2,
+  "right_censored": 2,
+  "median_event_interval_days": 273.5,
+  "followup_bins_days": [
+    "0\u2013364",
+    "365\u2013729",
+    "730\u20131094",
+    "1095\u20131824",
+    "1825+"
+  ],
+  "followup_counts": [
+    1,
+    1,
+    1,
+    1,
+    0
+  ],
+  "missing_predictors": {
+    "age": 0,
+    "mmse": 0,
+    "hippocampus_icv_ratio": 1
+  },
+  "status": "Input audit only; no survival model fitted and no new predictive performance estimated.",
+  "input_sha256": {
+    "baseline": "b6fdb1b30d2a1b0e3fc2bdedbea18883f2abe303e11d927d52455b4dc5d62c67",
+    "visits": "1d4d28cb9fbc6bea196f7956f77e3419038f16333d47a742c2f32054890b10e1"
+  }
+}
