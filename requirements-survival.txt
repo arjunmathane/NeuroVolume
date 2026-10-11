@@ -1,0 +1,7 @@
+# Separate environment: lifelines requires pandas <3; original study stays pinned.
+lifelines==0.30.3
+pandas==2.3.3
+numpy==2.5.3
+scipy==1.18.1
+scikit-learn==1.9.0
+pytest==9.1.1
