@@ -1,0 +1,63 @@
+{
+  "clinical": {
+    "features": [
+      "age",
+      "mmse"
+    ],
+    "medians": [
+      73.99642858022966,
+      27.979050932235282
+    ],
+    "means": [
+      73.73380414520989,
+      27.899102294781486
+    ],
+    "scales": [
+      6.762302637397992,
+      1.2552500414228627
+    ],
+    "coefficients": [
+      -0.2275613939313539,
+      0.09316654633879165
+    ],
+    "intercept": 7.563662979109933,
+    "shape": 1.4670203814517904,
+    "penalizer": 0.01,
+    "time_unit": "days",
+    "model": "interval-censored Weibull AFT",
+    "data_kind": "synthetic software validation"
+  },
+  "clinical_mri": {
+    "features": [
+      "age",
+      "mmse",
+      "hippocampus_icv_ratio"
+    ],
+    "medians": [
+      73.99642858022966,
+      27.979050932235282,
+      0.004748828893202662
+    ],
+    "means": [
+      73.73380414520989,
+      27.899102294781486,
+      0.004758480201983208
+    ],
+    "scales": [
+      6.762302637397992,
+      1.2552500414228627,
+      0.000680322806480698
+    ],
+    "coefficients": [
+      -0.2502630387295681,
+      0.10601606834850308,
+      0.41175724696299687
+    ],
+    "intercept": 7.587029036636527,
+    "shape": 1.5806857236283882,
+    "penalizer": 0.01,
+    "time_unit": "days",
+    "model": "interval-censored Weibull AFT",
+    "data_kind": "synthetic software validation"
+  }
+}
