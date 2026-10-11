@@ -1,0 +1,39 @@
+name: Verify model and demo
+on: [push, pull_request]
+jobs:
+  survival:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: pip install -r requirements-survival.txt
+      - run: python -m pytest tests/test_survival.py tests/test_longitudinal.py tests/test_adni_import.py tests/test_adni_release.py tests/test_privacy.py -q
+      - run: python -m neurovolume.survival --synthetic --output private/synthetic-survival
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: demo/package-lock.json
+      - run: pip install -r requirements.txt
+      - run: python scripts/build_standalone.py
+      - run: python -m pytest -q
+      - run: npm ci
+        working-directory: demo
+      - run: npm run lint
+        working-directory: demo
+      - run: npx tsc --noEmit
+        working-directory: demo
+      - run: npm run build
+        working-directory: demo
