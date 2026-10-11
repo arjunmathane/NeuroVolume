@@ -1,0 +1,14 @@
+.venv/
+.venv-survival/
+__pycache__/
+.pytest_cache/
+.DS_Store
+data/
+private/
+*.xlsx
+node_modules/
+demo/dist/
+demo/.vite/
+.env
+.env.*
+!.env.example
