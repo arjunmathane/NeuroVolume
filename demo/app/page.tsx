@@ -671,7 +671,6 @@ export default function Home() {
                   Source publication <ArrowUpRight size={15} />
                 </a>
                 <p className="subtle">
-                  Code and analysis implemented with OpenAI Codex assistance.
                   Raw participant records are not included in this demo.
                 </p>
               </section>
