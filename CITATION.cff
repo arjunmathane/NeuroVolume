@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this software, cite this repository and the original OASIS source separately. This is AI-assisted software with a self-published technical report, not a peer-reviewed article."
+message: "If you use this software, cite this repository and the original OASIS source separately. This is research software with a self-published technical report, not a peer-reviewed article."
 title: "NeuroVolume: cognitive-impairment research workbench"
 type: software
 authors:
@@ -9,4 +9,4 @@ version: "0.2.0"
 date-released: "2026-10-11"
 url: "https://github.com/arjunmathane/NeuroVolume"
 repository-code: "https://github.com/arjunmathane/NeuroVolume"
-abstract: "AI-assisted OASIS-2 classification benchmarks, an exploratory longitudinal pilot, and a synthetic interval-censored survival framework. Arjun Mathane directed the project; Codex implemented the software and report. See CONTRIBUTIONS.md for role disclosure."
+abstract: "OASIS-2 classification benchmarks, an exploratory longitudinal pilot, and a synthetic interval-censored survival framework. Arjun Mathane directed the project. See CONTRIBUTIONS.md for role disclosure."

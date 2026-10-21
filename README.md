@@ -2,11 +2,11 @@
 
 **Does adding MRI-derived brain volume improve classification of recorded cognitive impairment?**
 
-A reproducible, AI-assisted computational neuroscience project using **150 OASIS-2 participants**, four feature sets, and three model families. Includes **12 trained models**, a research notebook, a responsive model explorer, and tests that verify Python/browser prediction parity.
+A reproducible computational neuroscience project using **150 OASIS-2 participants**, four feature sets, and three model families. Includes **12 trained models**, a research notebook, a responsive model explorer, and tests that verify Python/browser prediction parity.
 
 **Project evidence:** [Technical report (PDF)](paper/NeuroVolume.pdf) · [Editable report](paper/NeuroVolume.md) · [Reproduce the work](docs/REPRODUCIBILITY.md) · [Contributions](docs/CONTRIBUTIONS.md) · [Resume wording and claim boundaries](docs/RESUME_EVIDENCE.md) · [Reporting map](docs/REPORTING_MAP.md)
 
-The report is self-published and has not been peer reviewed. Arjun Mathane directed the project; Codex implemented the software, analyses and report. Current ADNI work is an importer and feasibility audit, not a validated decline model.
+The report is self-published and has not been peer reviewed. Arjun Mathane directed the project; Current ADNI work is an importer and feasibility audit, not a validated decline model.
 
 ![Held-out model comparison](reports/model-comparison.png)
 
@@ -18,7 +18,7 @@ This is a **small, inconclusive incremental-value result**, not a claim that MRI
 
 [Complete results](reports/RESULTS.md) · [Analysis notebook](analysis.ipynb) · [Model card](docs/MODEL_CARD.md) · [Fixed analysis protocol](docs/PROTOCOL.md)
 
-## Standalone workbench: no ChatGPT account or hosting
+## Standalone workbench
 
 Open **[standalone/index.html](standalone/index.html)** in Safari, Chrome, or another browser. It contains the original current-impairment logistic models, exploratory future-impairment pilot, and a clearly labeled synthetic survival laboratory with interactive curves. Predictions run offline; no server, installation, API key, or login is needed. This directory can also be served by any static host, including GitHub Pages. Public hosting has not been configured in this release.
 
@@ -40,7 +40,7 @@ npm ci
 npm run dev
 ```
 
-Open the local address printed by the server (normally http://localhost:3000). No Python, API key, patient data, or retraining is needed to run the demo. This is a Sites/Vinext React app; it requires a Node development server or compatible Workers hosting and is not a plain GitHub Pages static directory. Publishing to your own Sites account requires your own site registration.
+Open the local address printed by the server (normally http://localhost:3000). No Python, API key, patient data, or retraining is needed to run the demo. This is a Vinext React app; it requires a Node development server or compatible Workers hosting and is not a plain GitHub Pages static directory.
 
 The explorer starts with **invented example measurements**, not a participant record. It classifies CDR > 0 versus CDR = 0 and displays a model score, **not calibrated medical risk, a clinical diagnosis, or future decline**. It accepts numeric MRI-derived measurements, not raw brain scans. There is no patient-upload or server-side input storage feature.
 
@@ -110,7 +110,7 @@ Data were provided by OASIS. OASIS-2: Longitudinal; Principal Investigators: D. 
 
 Marcus DS et al. (2010). *Open Access Series of Imaging Studies (OASIS): Longitudinal MRI Data in Nondemented and Demented Older Adults*. Journal of Cognitive Neuroscience, 22, 2677–2684. [doi:10.1162/jocn.2009.21407](https://doi.org/10.1162/jocn.2009.21407).
 
-The user selected the project direction. OpenAI Codex implemented the protocol, software, training, tests, and documentation for this release. This is explicitly an **AI-assisted project**, with no claim of independent manual coding, clinical validation, or scientific novelty. [Project explanation and accurate résumé wording](docs/PROJECT_GUIDE.md).
+The project compares demographic, MRI-derived and cognitive feature sets using fixed evaluation protocols. No clinical validation or scientific novelty is claimed. [Project explanation and accurate résumé wording](docs/PROJECT_GUIDE.md).
 
 MIT license applies to original source code only. OASIS data and trained artifacts are not relicensed under MIT; see [LICENSE](LICENSE) and [data terms](docs/DATA.md).
 
@@ -120,4 +120,4 @@ The repository now includes a tested canonical longitudinal importer, synthetic 
 
 The [survival framework](docs/SURVIVAL_FRAMEWORK.md) now fits interval-censored Weibull models, compares age + cognition against added hippocampal volume, evaluates held-out observation likelihood, and exports matching browser predictions. Bundled survival models use **600 invented participants**, with 450 training and 150 held out; these establish software operation only. They provide no clinical predictive evidence.
 
-ADNI application approval has been verified. A dictionary-reviewed ADNI adapter and local feasibility audit are implemented. Controlled ADNI records remain private; no fitted real-cohort survival model or external validation is supplied. The reviewed MRI subset does not support training under the declared rules. Older-release acquisition, source review and real-cohort protocol lock remain pending. All implementation and tests in this release were completed by Codex; the owner's role is project direction.
+ADNI application approval has been verified. A dictionary-reviewed ADNI adapter and local feasibility audit are implemented. Controlled ADNI records remain private; no fitted real-cohort survival model or external validation is supplied. The reviewed MRI subset does not support training under the declared rules. Older-release acquisition, source review and real-cohort protocol lock remain pending.
