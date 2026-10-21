@@ -38,7 +38,7 @@ def footer(canvas, doc):
     canvas.setFillColor(TEAL)
     canvas.drawString(48, 766, 'NEUROVOLUME  |  TECHNICAL REPORT v0.2')
     canvas.setFillColor(colors.HexColor('#52636b'))
-    canvas.drawString(48, 27, 'October 11, 2026  |  AI-assisted  |  Not peer reviewed')
+    canvas.drawString(48, 27, 'Text revised October 21, 2026  |  Not peer reviewed')
     canvas.drawRightString(564, 27, str(doc.page))
     canvas.restoreState()
 
@@ -76,7 +76,7 @@ def main():
     out=ROOT / 'paper/NeuroVolume.pdf'
     doc=SimpleDocTemplate(str(out),pagesize=(612,792),leftMargin=48,rightMargin=48,topMargin=51,bottomMargin=48,
                           title='NeuroVolume: Evaluating the Incremental Value of MRI-Derived Brain Measurements',
-                          author='NeuroVolume project; project lead Arjun Mathane; prepared with OpenAI Codex')
+                          author='NeuroVolume project; project lead Arjun Mathane')
     doc.build(story,onFirstPage=footer,onLaterPages=footer)
     print(out)
 

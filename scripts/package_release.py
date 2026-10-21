@@ -6,14 +6,15 @@ from pathlib import Path
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-EXCLUDE = {"private", "data", "node_modules", ".git", ".wrangler", "__pycache__", ".pytest_cache", ".venv", ".venv-survival", ".vite", "dist"}
+EXCLUDE = {"private", "data", "node_modules", ".git", ".wrangler", "__pycache__", ".pytest_cache", ".venv", ".venv-survival", ".vite", ".vinext", ".next", "dist"}
 
 
 def public_file(path):
     parts = path.relative_to(ROOT).parts
     return (path.is_file() and not path.is_symlink() and not EXCLUDE.intersection(parts)
             and not any(p.startswith(".env") and p != ".env.example" for p in parts)
-            and path.name != ".DS_Store" and path.suffix not in {".xlsx", ".zip", ".pyc", ".pem", ".key"})
+            and path.name not in {".DS_Store", "RELEASE_MANIFEST.json"}
+            and path.suffix not in {".xlsx", ".zip", ".pyc", ".pem", ".key", ".tsbuildinfo"})
 
 
 def main():
