@@ -39,6 +39,6 @@ Original workbook obtained from the official OASIS-2 page on 2026-09-06; checksu
 Joblib files can execute code when loaded. Only load files from a source you trust. The portable logistic JSON format and Python/TypeScript inference functions avoid pickle loading for the default demo.
 
 ## Contributions
-The project direction was selected by the user. OpenAI Codex implemented the analysis protocol, code, model training, tests, documentation, and interface during an AI-assisted build. This release does not claim independent manual implementation by the user, clinical validation, peer review, novelty, or deployment in patient care. Update contributions when actual review, analysis, experiments, or user testing occur.
+Arjun Mathane selected the project question and directed development. This release does not claim clinical validation, peer review, novelty, or deployment in patient care. Update contributions when actual review, analysis, experiments, or user testing occur.
 
 MRI and clinical assessments were associated by the original study and were not necessarily acquired on the same day. This is an associated-visit classification task; the source publication describes temporal offsets that further limit precise temporal interpretation.

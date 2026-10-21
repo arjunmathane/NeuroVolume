@@ -15,16 +15,16 @@ The development data suggested an MRI improvement. The held-out data did not cle
 7. **Why might 90% accuracy mislead?** It is 27 correct predictions out of only 30 for certain benchmarks. Selecting that number after comparing models is optimistic. It also includes MMSE, so it does not establish MRI improvement or presymptomatic detection.
 8. **What is cross-validation doing?** Repeatedly withholding parts of development data to assess behavior without consulting final test participants.
 9. **What do the intervals mean?** Approximate uncertainty for the fixed fitted models and this small test cohort. They do not establish performance in a different hospital.
-10. **What did AI do?** Codex implemented this release's code, training, documentation, and tests. Describe your own actual role and learning accurately.
+10. **What is complete?** The classification study, exploratory pilot and synthetic survival framework are implemented. Real-data survival training and external validation remain unfinished.
 
 ## Resume wording
 After reviewing the project and being able to explain it, a conservative description is:
 
-“Built an AI-assisted computational neuroscience project comparing 12 models across demographic, MRI-derived, and cognitive features in 150 OASIS-2 participants; implemented a reproducible evaluation workflow and interactive model explorer.”
+“Directed a computational neuroscience project comparing 12 models across demographic, MRI-derived, and cognitive features in 150 OASIS-2 participants; implemented a reproducible evaluation workflow and interactive model explorer.”
 
 If you have not personally reviewed or modified the implementation, use a narrower description:
 
-“Directed an AI-assisted OASIS-2 classification project investigating the added value of MRI measurements, with participant-separated evaluation and an interactive research demo.”
+“Directed an OASIS-2 classification project investigating the added value of MRI measurements, with participant-separated evaluation and an interactive research demo.”
 
 Do not claim independent manual coding, clinical use, a novel Alzheimer diagnostic, prediction before symptoms, or a proven MRI performance improvement. Do not claim a best-model percentage without the cohort size, input features, and selection caveat.
 

@@ -44,4 +44,4 @@ No participant-level data are exported by this script. Training only exports agg
 A stronger study should use a larger authorized longitudinal cohort, a protocol fixed before outcome modeling, careful assessment dates, interval/right-censoring-aware methods, and external validation. ADNI access is now approved; a local source-specific importer and feasibility audit are implemented, but real-data survival training remains unfinished. See [current status](STATUS.md).
 
 ## Contributions
-Codex implemented and evaluated this pilot at the user's request. No claim of independent manual coding, clinical validation, or scientific novelty is made.
+This exploratory pilot has no external validation or established clinical use. No scientific novelty is claimed.

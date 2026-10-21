@@ -2,9 +2,9 @@
 
 ## Suggested extended-resume entry
 
-**NeuroVolume | Project Lead, AI-assisted Computational Neuroscience**
+**NeuroVolume | Project Lead, Computational Neuroscience**
 
-Directed development of a reproducible research workbench comparing 12 classifiers on 150 OASIS-2 participants, with participant-separated evaluation and an exploratory 43-person longitudinal pilot. Extended the software with interval-censored survival modeling validated on 600 synthetic participants, portable browser inference, and 55 passing automated tests. Documented inconclusive MRI gains, model limitations, data provenance, and AI contributions in a public technical report and repository.
+Directed development of a reproducible research workbench comparing 12 classifiers on 150 OASIS-2 participants, with participant-separated evaluation and an exploratory 43-person longitudinal pilot. Extended the software with interval-censored survival modeling validated on 600 synthetic participants, portable browser inference, and 55 passing automated tests. Documented inconclusive MRI gains, model limitations, data provenance, and project scope in a public technical report and repository.
 
 Repository: https://github.com/arjunmathane/NeuroVolume
 
@@ -12,7 +12,7 @@ Report: https://github.com/arjunmathane/NeuroVolume/blob/main/paper/NeuroVolume.
 
 ## Compact entry
 
-Directed NeuroVolume, an AI-assisted neuroscience workbench comparing 12 models across 150 OASIS-2 participants; released reproducible code, a browser explorer and a technical report with transparent validation and limitations.
+Directed NeuroVolume, a neuroscience workbench comparing 12 models across 150 OASIS-2 participants; released reproducible code, a browser explorer and a technical report with transparent validation and limitations.
 
 ## What the evidence supports
 

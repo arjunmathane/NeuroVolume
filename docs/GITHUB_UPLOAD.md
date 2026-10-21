@@ -11,4 +11,4 @@ The package includes trained models, the executed notebook, measured results, de
 The hosted preview created for this project is private to its owner. It is not a public admissions-reviewer demo link. The GitHub repository can run the demo locally using the README instructions.
 
 ## Standalone version
-Open standalone/index.html directly in a browser for both studies. It works offline and can be hosted outside ChatGPT. Open neurovolume.code-workspace in VS Code for development. The older private hosted demo still displays phase one only.
+Open standalone/index.html directly in a browser for both studies. It works offline and can be hosted independently. Open neurovolume.code-workspace in VS Code for development. The older private hosted demo still displays phase one only.
