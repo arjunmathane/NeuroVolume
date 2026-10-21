@@ -4,9 +4,9 @@
 
 Project lead: Arjun Mathane | Independent educational project, TAMS / University of North Texas
 
-Technical report v0.2 | October 11, 2026 | Not peer reviewed
+Technical report v0.2 | October 11, 2026 | Text revised October 21, 2026 | Not peer reviewed
 
-Prepared with OpenAI Codex. Project direction was provided by Arjun Mathane; Codex implemented the analyses, software, tests, interface, and this report. No independent manual implementation, institutional endorsement, or human scientific review is asserted.
+Arjun Mathane selected the project question and directed development. No institutional endorsement or independent scientific review is asserted.
 
 ## Abstract
 
@@ -22,7 +22,7 @@ Conclusion: These analyses do not establish incremental MRI value or clinical ut
 
 Brain measurements can be investigated as predictors without assuming that a successful benchmark is a diagnostic product. OASIS-2 provides longitudinal MRI-derived measurements and clinical assessments from older adults [1]. This project asks a narrower question: does adding volume information improve a predefined comparator on participants excluded from model fitting?
 
-The work comprises three distinct evidence levels: a held-out classification analysis, an exploratory longitudinal pilot, and a synthetic survival experiment. Their outcomes, validation designs, and scientific interpretations are reported separately. Transparent reporting is informed by TRIPOD+AI [2]; this educational report does not claim formal checklist compliance or clinical validation.
+The work comprises three distinct evidence levels: a held-out classification analysis, an exploratory longitudinal pilot, and a synthetic survival experiment. Their outcomes, validation designs, and scientific interpretations are reported separately. The report documents the evaluation design and its limitations; clinical validation is not established.
 
 ---page---
 
@@ -86,7 +86,7 @@ At the fixed 0.5 threshold, both models predicted every participant as a non-eve
 
 ## 5. Synthetic interval-censored survival experiment
 
-The implemented framework preserves uncertainty between the last zero-CDR assessment (L) and first positive assessment (U). Right-censored observations contribute follow-up without inventing an event time. Weibull accelerated failure-time models were fitted using lifelines [3]. They compare age plus MMSE with age plus MMSE plus bilateral hippocampal volume divided by intracranial volume, using fixed L2 penalization 0.01 and training-only imputation/scaling.
+The implemented framework preserves uncertainty between the last zero-CDR assessment (L) and first positive assessment (U). Right-censored observations contribute follow-up without inventing an event time. Weibull accelerated failure-time models were fitted using lifelines [2]. They compare age plus MMSE with age plus MMSE plus bilateral hippocampal volume divided by intracranial volume, using fixed L2 penalization 0.01 and training-only imputation/scaling.
 
 The fixed generator created 600 invented participants, six-month assessments, independent censoring, and a deliberately imposed MRI association. A stratified 75/25 split (seed 20261009) allocated 450 participants to training and 150 to testing; the test set had 48 interval-observed events and 102 censored observations. These records do not represent actual patients.
 
@@ -98,11 +98,11 @@ Higher observation likelihood is better under the model assumptions; it is not p
 
 ## 6. Software and controlled-data extension
 
-The standalone HTML workbench contains the OASIS models, pilot, synthetic cohort audit, and interactive survival curves. Inference runs locally without a ChatGPT account, API key, or participant-upload feature. Portable JSON parameters support browser inference. Python, JavaScript, and native lifelines predictions are compared in automated tests. Source protocols, input schemas, dependency files, and CI configuration accompany the code.
+The standalone HTML workbench contains the OASIS models, pilot, synthetic cohort audit, and interactive survival curves. Inference runs locally without an account, API key, or participant-upload feature. Portable JSON parameters support browser inference. Python, JavaScript, and native lifelines predictions are compared in automated tests. Source protocols, input schemas, dependency files, and CI configuration accompany the code.
 
 The October 9 supported-environment check recorded 55 passing tests and one intentionally skipped private-data audit. Tests cover training-only preprocessing, participant separation, interval likelihood, missing scores, unit constraints, invalid records, scan quality, date ordering, duplicate outcomes, and output-path protection. Chrome desktop checks confirmed study switching, curve changes, invalid-input handling, reset, and a saved synthetic report. This is not comprehensive usability, accessibility, security, or cross-browser validation.
 
-ADNI access has been approved and a local dictionary-reviewed importer implemented. It checks scan acquisition dates, clinical dates, field definitions, missing codes, QC status, processing version, and private output paths. The reviewed cross-sectional MRI subset did not support the planned decline fit under the declared rules. An older release is needed; no ADNI model or ADNI performance result is reported. Controlled records, cohort rows, split membership, and derived private models are excluded from this public report and repository. Source-specific decisions and remaining acquisition work are documented in the repository [4].
+ADNI access has been approved and a local dictionary-reviewed importer implemented. It checks scan acquisition dates, clinical dates, field definitions, missing codes, QC status, processing version, and private output paths. The reviewed cross-sectional MRI subset did not support the planned decline fit under the declared rules. An older release is needed; no ADNI model or ADNI performance result is reported. Controlled records, cohort rows, split membership, and derived private models are excluded from this public report and repository. Source-specific decisions and remaining acquisition work are documented in the repository [3].
 
 ## 7. Discussion and limitations
 
@@ -114,7 +114,7 @@ The survival framework assumes a Weibull time distribution, independent censorin
 
 ## 8. Contributions, ethics, and availability
 
-Arjun Mathane selected and directed the project. Codex implemented the protocol documents, analysis, training, tests, application, and report. No completed independent human scientific review or manuscript approval is asserted. The original cohort investigators collected the data. This is a self-published technical report, not a journal publication, peer-reviewed discovery, or clinically deployed product.
+Arjun Mathane selected and directed the project. No completed independent scientific review or manuscript approval is asserted. The original cohort investigators collected the data. This is a self-published technical report, not a journal publication, peer-reviewed discovery, or clinically deployed product.
 
 No participants were recruited by this project. Original study ethics oversight is described by its investigators [1]; no new IRB approval, exemption, or institutional sponsorship is claimed here. No external project funding or conflict-of-interest review is documented in the project records. These statements should be revisited if the project is submitted for formal publication.
 
@@ -126,11 +126,9 @@ Code and evidence: https://github.com/arjunmathane/NeuroVolume . The original co
 
 [1] Marcus DS, Fotenos AF, Csernansky JG, Morris JC, Buckner RL. Open Access Series of Imaging Studies (OASIS): Longitudinal MRI Data in Nondemented and Demented Older Adults. Journal of Cognitive Neuroscience. 2010;22(12):2677-2684. https://doi.org/10.1162/jocn.2009.21407
 
-[2] Collins GS, Moons KGM, Dhiman P, et al. TRIPOD+AI statement: updated guidance for reporting clinical prediction models that use regression or machine learning methods. BMJ. 2024;385:e078378. https://doi.org/10.1136/bmj-2023-078378
+[2] lifelines contributors. WeibullAFTFitter, lifelines 0.30.3 documentation. https://lifelines.readthedocs.io/en/latest/fitters/regression/WeibullAFTFitter.html . Accessed October 11, 2026.
 
-[3] lifelines contributors. WeibullAFTFitter, lifelines 0.30.3 documentation. https://lifelines.readthedocs.io/en/latest/fitters/regression/WeibullAFTFitter.html . Accessed October 11, 2026.
-
-[4] NeuroVolume project. Source code, protocols, model cards, and aggregate reports, v0.2. https://github.com/arjunmathane/NeuroVolume . Technical report prepared October 11, 2026.
+[3] NeuroVolume project. Source code, protocols, model cards, and aggregate reports, v0.2. https://github.com/arjunmathane/NeuroVolume . Technical report prepared October 11, 2026.
 
 ## Required OASIS acknowledgement
 
