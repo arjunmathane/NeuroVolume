@@ -1,69 +1,40 @@
+"""Embed audited model files and local scripts into a dependency-free offline app."""
 from pathlib import Path
+import hashlib
 import json
-r=Path(__file__).resolve().parents[1]; s=r/'standalone'; s.mkdir(exist_ok=True)
-html='''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>NeuroVolume · Research Workbench</title><style>
-:root{font-family:system-ui,sans-serif;color:#17253c;background:#eef2f7;font-size:16px}body{margin:0}header{background:#132741;color:white;padding:24px 5%}header p{color:#c7d5e7}main{max-width:1120px;margin:32px auto;padding:0 24px}h1{font-size:28px;margin:0}h2{font-size:22px}p{line-height:1.6}.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.panel{background:white;border:1px solid #cbd5e1;padding:24px;border-radius:10px}label{display:block;margin:18px 0 8px}input,select,button{font:inherit;box-sizing:border-box;padding:10px;border:1px solid #8093a9;border-radius:5px;width:100%}button{background:#164b87;color:white;cursor:pointer;margin-top:20px}.score{font-size:44px;font-weight:650;color:#164b87}.note{border-left:4px solid #a56515;padding:12px 16px;background:#fff7e7}.small{font-size:14px;color:#40516b}table{width:100%;border-collapse:collapse}td,th{padding:12px 8px;text-align:left;border-bottom:1px solid #dce3ec}.scroll{overflow-x:auto}footer{margin:24px 0;color:#40516b}@media(max-width:720px){.grid{grid-template-columns:1fr}main{padding:0 14px}}[hidden]{display:none!important}
-</style></head><body><header><h1>NeuroVolume</h1><p>Research workbench · MRI measurements and cognitive impairment</p></header><main>
-<p>Explore actual trained models with invented example measurements. This application runs entirely in your browser, including when opened as a local file. No account, server, or internet connection is required.</p>
-<div class="grid"><section class="panel"><h2>Model explorer</h2><label for="study">Study</label><select id="study"><option value="current">Current impairment · held-out evaluation</option><option value="future">Future recorded impairment · exploratory pilot</option></select><label for="family">Measurements</label><select id="family"></select><div id="inputs"></div><button id="reset">Reset synthetic example</button><p class="small">Blank measurements use training medians. MRI inputs are numeric measurements; this does not process raw scans.</p></section>
-<section class="panel" aria-live="polite"><h2 id="resultTitle">Model output</h2><div id="score" class="score"></div><p id="classification"></p><p id="error" role="alert"></p><div class="note">Research score, not a calibrated personal medical risk. This is not a diagnosis or clinical decision tool.</div><h2>How the score is calculated</h2><div class="scroll"><table><thead><tr><th>Feature</th><th>Log-odds contribution</th></tr></thead><tbody id="contributions"></tbody></table></div><p class="small">Contributions describe this model, not biological causes. The intercept is added before converting to a 0–1 score.</p></section></div>
-<section class="panel" style="margin-top:24px"><h2 id="evidenceTitle"></h2><p id="finding"></p><div class="scroll"><table><thead><tr><th>Measurements</th><th id="metricLabel">ROC-AUC</th><th>Evaluation</th></tr></thead><tbody id="evidence"></tbody></table></div><p id="limitations" class="note"></p></section>
-<section class="panel" style="margin-top:24px"><h2>Next study: longitudinal data audit</h2><p class="note">SYNTHETIC SOFTWARE TEST · These invented participants test the importer. They provide no evidence about disease prediction. Larger-cohort access and survival-model validation are pending.</p><p id="auditSummary"></p><h3>Observed follow-up duration</h3><div id="auditBars"></div><p class="small">Source: bundled synthetic fixture · days from baseline to first recorded impairment or censoring. Bar lengths represent participant counts.</p><button id="downloadAudit">Download synthetic audit report</button></section><footer>OASIS-2 · Marcus et al., 2010 · Original data and individual participant records are not distributed. See the repository for protocol, attribution, reproducibility, and limitations.</footer></main><script>
-const audit=__AUDIT__;
-const current=__CURRENT__,future=__FUTURE__,report=__REPORT__,decline=__DECLINE__;
-const labels={demographics:'Demographics',mri:'Demographics + MRI',cognition:'Demographics + cognition',combined:'Demographics + MRI + cognition',age:'Age only',age_mri:'Age + normalized brain volume'};
-const names={Age:'Age (years)',Sex:'Recorded sex (0 = female, 1 = male)',EDUC:'Education (years)',SES:'Socioeconomic category (1–5)',eTIV:'Estimated intracranial volume (cm³)',nWBV:'Normalized whole-brain volume (fraction)',MMSE:'MMSE cognitive score (0–30)'};
-const defaults={Age:75,Sex:0,EDUC:16,SES:2,eTIV:1450,nWBV:0.74,MMSE:28};
-const bounds={Age:[60,96],Sex:[0,1],EDUC:[0,30],SES:[1,5],eTIV:[900,2200],nWBV:[.55,.90],MMSE:[0,30]};
-const $=id=>document.getElementById(id);let values={...defaults};
-function model(){return ($('study').value==='future'?future:current)[$('family').value]}
-function renderInputs(){const m=model();$('inputs').replaceChildren();m.features.forEach(f=>{const label=document.createElement('label');label.htmlFor='f_'+f;label.textContent=names[f];const input=document.createElement('input');input.id='f_'+f;input.type='number';input.min=bounds[f][0];input.max=bounds[f][1];input.step=f==='nWBV'?'0.001':'1';input.value=values[f]??'';input.addEventListener('input',()=>{values[f]=input.value===''?null:Number(input.value);predict()});$('inputs').append(label,input)});predict()}
-function predict(){const m=model();let z=m.intercept;let rows=[];let error='';m.features.forEach((f,i)=>{let v=values[f];if(v!==null&&(!Number.isFinite(v)||v<bounds[f][0]||v>bounds[f][1]||(['Sex','SES'].includes(f)&&!Number.isInteger(v))))error=names[f]+' is outside the supported range.';const c=((v??m.medians[i])-m.means[i])/m.scales[i]*m.coefficients[i];z+=c;rows.push('<tr><td>'+names[f]+(v===null?' (imputed)':'')+'</td><td>'+c.toFixed(3)+'</td></tr>')});$('error').textContent=error;$('score').textContent=error?'—':(1/(1+Math.exp(-Math.max(-700,Math.min(700,z))))).toFixed(3);$('classification').textContent=error?'Correct the measurement to calculate a score.':($('study').value==='future'?'Illustrative three-year recorded-impairment score. Final refit uses the entire small pilot cohort.':'Classification at threshold 0.5: '+(z>=0?'CDR > 0':'CDR = 0'));$('contributions').innerHTML=error?'':rows.join('')+'<tr><td>Intercept</td><td>'+m.intercept.toFixed(3)+'</td></tr>'}
-function study(){const isFuture=$('study').value==='future';const models=isFuture?future:current;$('family').innerHTML=Object.keys(models).map(k=>'<option value="'+k+'">'+labels[k]+'</option>').join('');$('family').value=isFuture?'age_mri':'mri';$('evidenceTitle').textContent=isFuture?'Future impairment: exploratory internal validation':'Current impairment: independent held-out participants';$('metricLabel').textContent=isFuture?'Mean repeated out-of-fold AUC':'Test ROC-AUC';if(isFuture){const c=decline.cohort;$('finding').textContent=c.included+' participants: '+c.events+' recorded events and '+c.non_events+' observed non-events. '+c.excluded_insufficient_followup+' initially eligible participants excluded for insufficient follow-up. Endpoint: first recorded CDR > 0 within 1095 MRI-delay days.';$('evidence').innerHTML=Object.entries(decline.results).map(([k,v])=>'<tr><td>'+labels[k]+'</td><td>'+v.mean_repeated_oof_auc.toFixed(3)+'</td><td>3 folds × 10 repeats; no independent test</td></tr>').join('');$('limitations').textContent=decline.limitations.join(' ')}else{$('finding').textContent='Adding MRI changed the primary logistic test AUC from 0.683 to 0.688. The paired 95% bootstrap interval for the difference includes zero; incremental MRI value was not established.';$('evidence').innerHTML=report.results.filter(r=>r.algorithm==='logistic').map(r=>'<tr><td>'+r.label+'</td><td>'+r.test.auc.toFixed(3)+'</td><td>30 test participants; 120 development</td></tr>').join('');$('limitations').textContent='Current recorded impairment is not future decline or confirmed Alzheimer disease. Cognitive scores measure a related clinical construct. A single small cohort limits generalization.'}renderInputs()}
-$('auditSummary').textContent=`${audit.input_participants} input participants → ${audit.included} included; ${audit.events} events and ${audit.right_censored} right-censored. Exclusions: ${Object.entries(audit.excluded).filter(([,n])=>n).map(([k,n])=>k.replaceAll('_',' ')+': '+n).join('; ')}. Median event-observation interval: ${audit.median_event_interval_days} days.`;
-$('auditBars').innerHTML=audit.followup_bins_days.map((label,i)=>`<div style="display:grid;grid-template-columns:130px 1fr 40px;gap:10px;margin:12px 0"><span>${label} days</span><span style="background:#edf1f7"><span style="display:block;background:#164b87;height:22px;width:${100*audit.followup_counts[i]/Math.max(1,...audit.followup_counts)}%"></span></span><span>${audit.followup_counts[i]}</span></div>`).join('');
-$('downloadAudit').addEventListener('click',()=>{const a=document.createElement('a');const url=URL.createObjectURL(new Blob([JSON.stringify(audit,null,2)],{type:'application/json'}));a.href=url;a.download='neurovolume-synthetic-audit.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
-$('study').addEventListener('change',study);$('family').addEventListener('change',renderInputs);$('reset').addEventListener('click',()=>{values={...defaults};renderInputs()});study();
-</script></body></html>'''
-survival_panel='''<section class="panel" id="survivalStudy" style="margin-top:24px"><h2>Longitudinal survival laboratory</h2>
-<p class="note"><strong>SYNTHETIC DATA ONLY.</strong> These models were trained on 600 invented people. The generator deliberately makes smaller hippocampal volume associated with earlier impairment. This tests the software and provides no evidence about Alzheimer disease or anyone's prognosis.</p>
-<p>The model retains the interval between the last unimpaired assessment and first positive assessment. People without an observed event remain right-censored at their last assessment. It compares age + cognition with age + cognition + normalized hippocampal volume.</p>
-<div class="grid"><div><label for="sAge">Invented age (55–95 years)</label><input id="sAge" type="number" min="55" max="95" value="74" step="1">
-<label for="sMmse">Invented MMSE score (23–30; blank uses training median)</label><input id="sMmse" type="number" min="23" max="30" value="28" step="0.1">
-<label for="sRatio">Invented bilateral hippocampus / intracranial volume ratio (0.002–0.007)</label><input id="sRatio" type="number" min="0.002" max="0.007" value="0.0048" step="0.0001"><button id="resetSurvival">Reset invented scenario</button><p id="survivalError" role="alert"></p></div>
-<div><h3>Model-implied fraction without an event</h3><svg id="survivalChart" viewBox="0 0 500 290" role="img" aria-labelledby="curveTitle curveDesc" style="width:100%;height:auto"><title id="curveTitle">Synthetic survival curves</title><desc id="curveDesc">Age and cognition versus age, cognition and MRI over zero to five years. Numeric predictions are shown below.</desc></svg><p><span style="color:#164b87">● Age + cognition</span> · <span style="color:#a34e0a">● With MRI</span></p><p id="survivalValues" aria-live="polite"></p></div></div>
-<h3>Held-out software experiment</h3><p id="survivalEvidence"></p><p class="small">Observation log likelihood measures the probability assigned to the observed event intervals and censoring. Higher is better. It is not percent accuracy. The paired bootstrap interval conditions on these fitted models and does not include training uncertainty. No exact onset times or unknown three-year labels were invented for evaluation.</p>
-<button id="downloadSurvival">Download synthetic experiment report</button></section>'''
-html=html.replace('<footer>',survival_panel+'<footer>')
-html=html.replace('<main>', '<main><nav aria-label="Study sections"><a href="#evidenceTitle">OASIS evidence</a> · <a href="#survivalStudy">Synthetic survival laboratory</a></nav>')
-html=html.replace('Larger-cohort access and survival-model validation are pending.', 'ADNI access is approved and the local data importer is implemented. Real-data survival validation remains pending; the synthetic model laboratory below is implemented.')
-survival_js=(r/'web/survival.mjs').read_text().replace('export function','function')
-html=html.replace('</body>', '''<script>
-const survivalModels=__SURVIVAL_MODELS__,survivalReport=__SURVIVAL_REPORT__;
-'''+survival_js+'''
-function drawSurvival(){
- const fields=['sAge','sMmse','sRatio'];const values=fields.map(id=>$(id).value===''?null:Number($(id).value));
- const limits=[[55,95],[23,30],[.002,.007]];let error='';
- values.forEach((v,i)=>{if((v===null&&i!==1)||(v!==null&&(!Number.isFinite(v)||v<limits[i][0]||v>limits[i][1])))error='Use measurements within the displayed synthetic example ranges.'});
- $('survivalError').textContent=error;
- if(error){$('survivalChart').innerHTML='<title>Invalid scenario</title>';$('survivalValues').textContent='Correct the measurements to view the curves.';return}
- const profile={age:values[0],mmse:values[1],hippocampus_icv_ratio:values[2]};const days=Array.from({length:61},(_,i)=>i*1825/60);
- const clinical=survivalCurve(survivalModels.clinical,profile,days),mri=survivalCurve(survivalModels.clinical_mri,profile,days);
- const path=a=>a.map((v,i)=>(i===0?'M':'L')+(55+420*i/60).toFixed(2)+','+(240-210*v).toFixed(2)).join(' ');
- const grid=[0,.25,.5,.75,1].map(v=>`<line x1="55" x2="475" y1="${240-210*v}" y2="${240-210*v}" stroke="#dce3ec"/><text x="45" y="${245-210*v}" text-anchor="end" font-size="12">${v.toFixed(2)}</text>`).join('');
- const ticks=[0,1,2,3,4,5].map(v=>`<text x="${55+84*v}" y="260" text-anchor="middle" font-size="12">${v}</text>`).join('');
- $('survivalChart').innerHTML='<title id="curveTitle">Synthetic survival curves</title><desc id="curveDesc">Invented scenario, never a clinical prognosis.</desc>'+grid+ticks+'<text x="265" y="285" text-anchor="middle" font-size="12">Years since invented baseline</text><path d="'+path(clinical)+'" fill="none" stroke="#164b87" stroke-width="3"/><path d="'+path(mri)+'" fill="none" stroke="#a34e0a" stroke-width="3"/>';
- const a=survivalCurve(survivalModels.clinical,profile,[1095])[0],b=survivalCurve(survivalModels.clinical_mri,profile,[1095])[0];
- $('survivalValues').textContent='At three years, synthetic event-free fraction: age + cognition '+a.toFixed(3)+'; with MRI '+b.toFixed(3)+'. These are predictions from invented data, not medical risks.';
+import re
+
+ROOT = Path(__file__).resolve().parents[1]
+ARTIFACTS = {
+    'current': 'models/logistic.json', 'future': 'models/decline-logistic.json',
+    'report': 'reports/results.json', 'decline': 'reports/decline-results.json',
+    'audit': 'reports/synthetic-longitudinal-audit.json',
+    'survivalModels': 'models/synthetic-survival.json', 'survivalReport': 'reports/synthetic-survival.json',
 }
-const gain=survivalReport.paired_mri_gain;
-$('survivalEvidence').textContent=survivalReport.training_participants+' training participants; '+survivalReport.test_participants+' held-out participants ('+survivalReport.test_events+' observed events, '+survivalReport.test_right_censored+' right-censored). Mean test log likelihood: age + cognition '+survivalReport.results.clinical.mean_test_log_likelihood.toFixed(3)+'; with MRI '+survivalReport.results.clinical_mri.mean_test_log_likelihood.toFixed(3)+'. MRI difference '+gain.mean.toFixed(3)+'; paired 95% bootstrap interval ['+gain.bootstrap_95_interval.map(v=>v.toFixed(3)).join(', ')+']. MRI benefit is simulated by design; even this interval includes zero.';
-['sAge','sMmse','sRatio'].forEach(id=>$(id).addEventListener('input',drawSurvival));
-$('resetSurvival').addEventListener('click',()=>{['sAge','sMmse','sRatio'].forEach((id,i)=>$(id).value=[74,28,.0048][i]);drawSurvival()});
-$('downloadSurvival').addEventListener('click',()=>{const a=document.createElement('a');const url=URL.createObjectURL(new Blob([JSON.stringify(survivalReport,null,2)],{type:'application/json'}));a.href=url;a.download='neurovolume-synthetic-survival-report.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
-drawSurvival();
-</script></body>''')
-for name,path in [('SURVIVAL_MODELS','models/synthetic-survival.json'),('SURVIVAL_REPORT','reports/synthetic-survival.json'),('AUDIT','reports/synthetic-longitudinal-audit.json'),('CURRENT','models/logistic.json'),('FUTURE','models/decline-logistic.json'),('REPORT','reports/results.json'),('DECLINE','reports/decline-results.json')]:
- html=html.replace('__'+name+'__',json.dumps(json.loads((r/path).read_text())))
-(s/'index.html').write_text(html)
-(r/'neurovolume.code-workspace').write_text(json.dumps({'folders':[{'path':'.'}],'settings':{'files.exclude':{'**/__pycache__':True}}},indent=2))
+
+
+def build():
+    data = {name: json.loads((ROOT / path).read_text()) for name, path in ARTIFACTS.items()}
+    data['models'] = {name: data.pop(name) for name in ('current', 'future')}
+    data['model_sha256'] = {
+        name: hashlib.sha256((ROOT / ARTIFACTS[name]).read_bytes()).hexdigest()
+        for name in ('current', 'future')
+    }
+    # Escape HTML delimiters in embedded JSON. The page never needs a network fetch.
+    serialized = json.dumps(data, ensure_ascii=True).replace('<', '\\u003c').replace('>', '\\u003e').replace('&', '\\u0026')
+    replacements = {'DATA': serialized}
+    for key, name in [('LOGISTIC_ENGINE', 'scenarios.mjs'), ('SURVIVAL_ENGINE', 'survival.mjs'),
+                      ('WORKBENCH_SCRIPT', 'workbench.js')]:
+        replacements[key] = re.sub(r'^export (?=(?:function|const)\b)', '',
+                                   (ROOT / 'web' / name).read_text(), flags=re.MULTILINE)
+    html = (ROOT / 'web/workbench.html').read_text()
+    for key, content in replacements.items():
+        html = html.replace('__' + key + '__', content)
+    destination = ROOT / 'standalone/index.html'
+    destination.parent.mkdir(exist_ok=True)
+    destination.write_text(html)
+    print(f'Built offline workbench: {destination}')
+
+
+if __name__ == '__main__':
+    build()
