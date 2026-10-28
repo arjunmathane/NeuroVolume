@@ -5,8 +5,8 @@ type: software
 authors:
   - family-names: Mathane
     given-names: Arjun
-version: "0.2.0"
-date-released: "2026-10-11"
+version: "0.3.0"
+date-released: "2026-10-28"
 url: "https://github.com/arjunmathane/NeuroVolume"
 repository-code: "https://github.com/arjunmathane/NeuroVolume"
 abstract: "OASIS-2 classification benchmarks, an exploratory longitudinal pilot, and a synthetic interval-censored survival framework. Arjun Mathane directed the project. See CONTRIBUTIONS.md for role disclosure."
