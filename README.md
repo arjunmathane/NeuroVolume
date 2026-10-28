@@ -6,7 +6,7 @@ A reproducible computational neuroscience project using **150 OASIS-2 participan
 
 **Project evidence:** [Technical report (PDF)](paper/NeuroVolume.pdf) · [Editable report](paper/NeuroVolume.md) · [Reproduce the work](docs/REPRODUCIBILITY.md) · [Contributions](docs/CONTRIBUTIONS.md) · [Resume wording and claim boundaries](docs/RESUME_EVIDENCE.md) · [Reporting map](docs/REPORTING_MAP.md)
 
-The report is self-published and has not been peer reviewed. Arjun Mathane directed the project; Current ADNI work is an importer and feasibility audit, not a validated decline model.
+The report is self-published and has not been peer reviewed. Arjun Mathane directed the project. Current ADNI work is an importer and feasibility audit, not a validated decline model.
 
 ![Held-out model comparison](reports/model-comparison.png)
 
@@ -19,6 +19,10 @@ This is a **small, inconclusive incremental-value result**, not a claim that MRI
 [Complete results](reports/RESULTS.md) · [Analysis notebook](analysis.ipynb) · [Model card](docs/MODEL_CARD.md) · [Fixed analysis protocol](docs/PROTOCOL.md)
 
 ## Standalone workbench
+
+**New in v0.3.0:** paired invented-scenario comparisons, explicit training-median substitutions, and version-checked JSON save/restore. Pin an example as reference A, edit B, and download both for reproducible exploration. The evidence tables now include sensitivity and specificity; synthetic survival curves also have numeric predictions. See the [workbench guide](docs/WORKBENCH.md).
+
+For a ready-to-open copy, download **[NeuroVolume-v0.3.0.html](https://github.com/arjunmathane/NeuroVolume/releases/download/v0.3.0/NeuroVolume-v0.3.0.html)** and open it in your browser. No installation is needed. The GitHub source-file view below displays code; download the file to run the application.
 
 Open **[standalone/index.html](standalone/index.html)** in Safari, Chrome, or another browser. It contains the original current-impairment logistic models, exploratory future-impairment pilot, and a clearly labeled synthetic survival laboratory with interactive curves. Predictions run offline; no server, installation, API key, or login is needed. This directory can also be served by any static host, including GitHub Pages. Public hosting has not been configured in this release.
 
@@ -91,7 +95,8 @@ The demo and reported results use models fitted only on the 120 development part
 
 - `neurovolume/`: training, validation, portable inference, and command-line prediction.
 - `models/`: twelve trained pipelines and four portable logistic models.
-- `demo/`: React/TypeScript research workspace and inference engine.
+- `demo/`: original React/TypeScript research workspace and inference engine.
+- `web/`: maintained offline-workbench template, UI, portable inference and scenario files.
 - `analysis.ipynb`: executed walkthrough of the saved experiment and synthetic inference.
 - `reports/`: measured results, development fold scores, and PNG/SVG figures.
 - `tests/`: baseline leakage, preprocessing, metric, artifact consistency, and prediction parity checks.
