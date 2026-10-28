@@ -1,5 +1,15 @@
 # NeuroVolume release checks
 
+## October 28, 2026 scenario-workbench update
+
+- Supported-environment Python suite: **62 passed, one intentionally skipped private-data audit**. The suite includes ten Node scenario-contract subtests and portable inference comparisons on 606 invented/missing-value profiles across all six OASIS logistic models.
+- Generated-app integration checks cover independent reference snapshots, same-model comparisons, median substitutions, exact model identity, JSON round trips, invalid-import atomicity, partial numeric edits, stale-output suppression, study switching, survival tables, resets and report downloads.
+- Browser checks confirmed pin/edit comparison, JSON download to disk and restore of both examples, future-pilot evidence, invalid-age markers and disabled exports. No browser console errors were observed during these checks.
+- Desktop (1280px) and phone (375px) layouts were visually inspected; neither had document-level horizontal overflow. All input/select controls had associated labels. This is targeted QA, not exhaustive browser or accessibility certification.
+- The original model parameter files, fitted pipelines, measured reports and paper are unchanged. The update adds no predictive evidence, real-data training or clinical validation.
+- Maintained HTML, scripts and portable engines are now separate source files embedded by the deterministic standalone builder; the output remains a single offline HTML file.
+
+
 ## October 9, 2026 acquisition and browser update
 
 - Full supported-environment suite: **55 passed, one intentionally skipped private-data audit**. Added invented-export cleaning, dictionary mapping, missing-code, timing, QC and private-path protection tests.
